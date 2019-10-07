@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BellCurve         //Prototype-need a lot of modifications and corrections
+{
+    public partial class Form1 : Form
+    {
+        PointF[] points;
+       
+        Graphics g;
+        int margin = 50;
+        public Form1()
+        {
+            InitializeComponent();
+            sample();
+        }
+
+        Random r = new Random();
+        int range = 20;     //0~20의 값
+
+        public PointF[] Points { get => points; set => points = value; }
+
+        void sample()
+        {
+           
+        }
+
+        private void test_Click(object sender, EventArgs e)
+        {
+            g = CreateGraphics();
+            g.DrawRectangle(new Pen(Color.Black, 1), new Rectangle(margin,margin,1200,600));
+
+        }
+
+        private  void start_Click(object sender, EventArgs e)
+        {
+            int num = int.Parse(textBox1.Text);
+            Pen pen = new Pen(Color.Red, 3);
+            int N = int.Parse(n.Text);
+            int[] arr = new int[num];
+            points = new PointF[num];
+           
+            for(int i = 0; i < num; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    arr[i] += r.Next() % 2;
+                }
+                float tempF = arr[i] / 20;
+                points[i] = new PointF(((1200 - margin) / num) * i + margin, 600 * (1 - tempF) + margin);
+            }
+            g.DrawLines(pen, Points);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void n_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
